@@ -32,3 +32,14 @@
   when: port_out.failed == false
   tags: port_check
   ignore_errors: yes
+  
+  
+- name: Include for each server in group linux
+  include: health_check.yml
+  with_items: "{{ inventory_hostname }}"
+  when: port_out.failed == false
+  #ignore_errors: yes
+  
+  
+  
+  
