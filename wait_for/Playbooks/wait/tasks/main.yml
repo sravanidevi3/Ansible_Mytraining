@@ -34,6 +34,15 @@
   ignore_errors: yes
   
   
+  
+  
+- name: hostname details
+  shell: echo $hostname
+  register: host_output
+- debug:
+    var: host_output.stdout_lines
+  
+  
 #- name: Include for each server in group linux
 #  include: health_check.yml
 # with_items: "{{ inventory_hostname }}"
@@ -41,11 +50,5 @@
 #  ignore_errors: yes
   
   
-- name: getting hostname details
-  shell: echo $HOSTNAME
-  timeout: 100
-  register: host_output
-- debug: 
-    var: host_output.stdout_lines[0]
-  ignore_errors: yes
+
   
