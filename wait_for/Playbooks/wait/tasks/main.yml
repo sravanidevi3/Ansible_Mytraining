@@ -35,19 +35,11 @@
   
   
   
-  
-- name: hostname details
-  shell: echo $HOSTNAME
-  register: host_output
-- debug:
-    var: host_output.stdout_lines[0]
-  
-  
-#- name: Include for each server in group linux
-#  include: health_check.yml
-# with_items: "{{ inventory_hostname }}"
-#  when: port_out.failed == false
-#  ignore_errors: yes
+- name: Include for each server in group linux
+  include: health_check.yml
+  with_items: "{{ inventory_hostname }}"
+  when: port_out.failed == false
+  ignore_errors: yes
   
   
 
