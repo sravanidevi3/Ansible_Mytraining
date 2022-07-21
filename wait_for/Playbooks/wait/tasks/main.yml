@@ -37,7 +37,7 @@
   
   
 - name: hostname details
-  shell: echo $hostname
+  shell: echo $HOSTNAME
   register: host_output
 - debug:
     var: host_output.stdout_lines
