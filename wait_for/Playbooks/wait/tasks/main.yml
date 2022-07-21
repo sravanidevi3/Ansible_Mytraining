@@ -40,7 +40,7 @@
   shell: echo $HOSTNAME
   register: host_output
 - debug:
-    var: host_output.stdout_lines
+    var: host_output.stdout_lines[0]
   
   
 #- name: Include for each server in group linux
