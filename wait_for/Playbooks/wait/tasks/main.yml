@@ -38,7 +38,7 @@
   include: health_check.yml
   with_items: "{{ inventory_hostname }}"
   when: port_out.failed == false
-  #ignore_errors: yes
+  ignore_errors: yes
   
   
   
