@@ -1,11 +1,10 @@
-
-- name: getting hostname details
+- name: hostname details
   shell: echo $HOSTNAME
-  timeout: 100
   register: host_output
-- debug: 
+- debug:
     var: host_output.stdout_lines[0]
-  ignore_errors: yes
+
+
   
   
 
