@@ -46,8 +46,6 @@
     src: /var/lib/jenkins/workspace/Wait_for/wait_for/Playbooks/wait/templates/healthcheck.j2
     dest: /var/jenkins/workspace/Wait_for/wait_for/reports/Server_Health_Check.html
   ignore_errors: yes 
-  vars:
-    ansible_port: 22
-    ansible_connection: local
+  
 
   
