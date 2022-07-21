@@ -19,8 +19,16 @@
     var: port_out     
 
 - name: Connection Failed Status
-  fail:
+  debug:
     msg: "{{inventory_hostname}} is not Reachable"
   when: port_out.failed == true
+  tags: port_check
+  ignore_errors: yes
+
+
+- name: Connection Success status
+  debug:
+    msg: "{{ inventory_hostname }} is reachable"
+  when: port_out.failed == false
   tags: port_check
   ignore_errors: yes
