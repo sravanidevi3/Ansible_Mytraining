@@ -24,7 +24,6 @@
 </tr>
 
 {% for linux in groups['linux'] %}
-{% if  hostvars[linux]['var_top_cpu'] != "NA" %}
 <tr>
 
 
@@ -33,7 +32,6 @@
     
 
 </tr>
-{% endif %}
 {% endfor %}
 </table>
 </body>
