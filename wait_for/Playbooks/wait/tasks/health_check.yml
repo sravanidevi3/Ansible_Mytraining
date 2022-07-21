@@ -5,7 +5,8 @@
   register: host_output
   ignore_errors: yes
 
-- debug: var=host_output.stdout_lines[0]
+  debug: 
+  - var: host_output.stdout_lines[0]
   ignore_errors: yes
   
   
