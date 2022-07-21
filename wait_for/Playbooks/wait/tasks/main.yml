@@ -17,3 +17,10 @@
 
 - debug:
     var: port_out     
+
+- name: Connection Failed Status
+  fail:
+    msg: "{{inventory_hostname}} is not Reachable"
+  when: port_out.failed == true
+  tags: port_check
+  ignore_errors: yes
