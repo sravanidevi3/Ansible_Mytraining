@@ -44,7 +44,7 @@
   
 - template:
     src: /var/lib/jenkins/workspace/Wait_for/wait_for/Playbooks/wait/templates/healthcheck.j2
-    dest: /var/lib/jenkins/workspace/Wait_for/wait_for/Reports/Server_Health_Check.html
+    dest: /var/lib/jenkins/workspace/Wait_for/wait_for/reports/Server_Health_Check.html
   ignore_errors: yes 
   
 
