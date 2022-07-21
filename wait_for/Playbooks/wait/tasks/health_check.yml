@@ -4,6 +4,46 @@
 - debug:
     var: host_output.stdout_lines[0]
 
+- name: Setting Server IP
+  set_fact:
+    var_ip: "{{inventory_hostname}}"
+  ignore_errors: yes
+  
+  
+- name: Setting Server Name If Server Name Exist
+  set_fact:
+    host_output: "{{host_output.stdout_lines[0]}}"
+  when: host_output is success
+  ignore_errors: yes
+  
+  
+- name: Linux Ping Check
+  ping:
+    data: success
+  timeout: 100
+  register: ping_out
+  ignore_errors: yes
+
+- name: debug ping
+  debug:
+    msg: "{{ ping_out.ping }}"
+  ignore_errors: yes
+
+
+- name: If ping status is UP
+  set_fact:
+    var_ping: UP
+    var_os: "Linux"
+  when: ping_out is success
+  ignore_errors: yes
+
+- name: If ping status is DOWN
+  set_fact:
+    var_ping: DOWN
+    var_os: "Linux"
+  when: ping_out is failed
+  ignore_errors: yes
+
 
   
   
