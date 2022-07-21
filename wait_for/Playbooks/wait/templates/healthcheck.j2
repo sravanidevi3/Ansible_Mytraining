@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<HTML><TITLE>Server Healthcheck</TITLE><BODY>
+<style type=text/css>
+        .tg  {border-collapse:collapse;border-spacing:0;}
+        .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+        .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+        .tg .tg-dq45{color:#000000;background-color:#FBCDC3;vertical-align:center}
+        .tg .tg-t6e1{font-weight:bold;font-size:16px;background-color:#b4b4b4;color:#000000;vertical-align:top}
+        .tg .tg-t6g2{font-weight:bold;font-size:13px;background-color:#bbdaff;color:#000000;vertical-align:top}
+        .tg .tg-red{color:#fe0000;vertical-align:top;border-color:#000000}
+        .tg .tg-grn{color:#34ff34;vertical-align:top;border-color:#000000}
+        .tg .tg-ylw{color:#FFF633;vertical-align:top;border-color:#000000}
+</style>
+
+<table class=tg align=center table width=1200px>
+<tr>
+        <th class=tg-t6e1 colspan=35>Server Healthcheck</th>
+</tr>
+<tr>
+
+      <td class=tg-t6g2 align=center>Host Name</td>
+      <td class=tg-t6g2 align=center>Connection Status</td>
+ 
+</tr>
+
+{% for linux in groups['linux'] %}
+{% if  hostvars[linux]['var_top_cpu'] != "NA" %}
+<tr>
+
+
+    <td class=tg-dq45 rowspan=11 align=center>{{hostvars[linux]['host_output']}}</td>
+    <td class=tg-dq45 rowspan=11 align=center>{{hostvars[linux]['var_ping']}}</td>
+    
+
+</tr>
+{% endfor %}
+{% else %}
+<table class=tg align=center table width=1200px>
+<tr>
+    <td class=tg-dq45 rowspan=11 align=center>{{hostvars[linux]['host_output']}}</td>
+</tr>
+</table>
+{% endif %}
+{% endfor %}
+</table>
+</body>
+</html>
+
