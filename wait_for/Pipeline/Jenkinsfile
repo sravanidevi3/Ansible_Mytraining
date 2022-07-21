@@ -7,7 +7,7 @@ pipeline {
                stage ('wait_for') {
                  
                     steps {
-                       sh 'ansible-playbook /var/lib/jenkins/workspace/${JOB_NAME}/wait_for/Playboooks/wait.yml'
+                       sh 'ansible-playbook /var/lib/jenkins/workspace/${JOB_NAME}/wait_for/Playbooks/wait.yml'
                       
                     }
                }
