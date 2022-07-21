@@ -1,3 +1,19 @@
 - name: wait for 2 sec and continue play
   wait_for:
       timeout: 2
+      
+      
+- name: Check all port
+  wait_for:
+    host: "{{ inventory_hostname }}"
+    port: 22
+    delay: 2
+    timeout: 3
+  ignore_unreachable: yes
+  ignore_errors: yes
+  register: port_out
+  #delegate_to: localhost
+  #tags: port_check
+
+- debug:
+    var: port_out     
