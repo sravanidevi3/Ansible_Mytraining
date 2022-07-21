@@ -20,7 +20,6 @@
 - name: Linux Ping Check
   ping:
     data: success
-  timeout: 100
   register: ping_out
   ignore_errors: yes
 
