@@ -13,41 +13,41 @@
 - debug:
     var: port_out
 
-- name: Connection Failed Status
-  fail:
-    msg: "{{inventory_hostname}} is not Reachable"
-  when: port_out.failed == true
-  tags: port_check
-  ignore_errors: yes
+#- name: Connection Failed Status
+#  fail:
+#   msg: "{{inventory_hostname}} is not Reachable"
+#  when: port_out.failed == true
+ # tags: port_check
+ # ignore_errors: yes
 
-- name: Connection Success Status
-  debug:
-    msg: "{{inventory_hostname}} is Reachable"
-  when: port_out.failed == false
-  tags: port_check
-  ignore_errors: yes
+#- name: Connection Success Status
+ # debug:
+ #   msg: "{{inventory_hostname}} is Reachable"
+ # when: port_out.failed == false
+ # tags: port_check
+ # ignore_errors: yes
 
-- name: If Host Is Down Setting Up Variable
-  set_fact:
-    var_Sname: "{{inventory_hostname}} Server Is Either Unreachable Or Sudo Access is Not Working , No Information Can Be Provided"
-    var_ping: "Down"
-    var_swap: "NA"
-    var_FS: "NA"
-    var_top_cpu: "NA"
-  when: port_out.failed == true
-  ignore_errors: yes
+#- name: If Host Is Down Setting Up Variable
+ # set_fact:
+   # var_Sname: "{{inventory_hostname}} Server Is Either Unreachable Or Sudo Access is Not Working , No Information Can Be Provided"
+   # var_ping: "Down"
+   # var_swap: "NA"
+   # var_FS: "NA"
+   # var_top_cpu: "NA"
+#  when: port_out.failed == true
+#  ignore_errors: yes
 
-- name: Include for each server in group linux
-  include: health_check.yml
-  with_items: "{{ inventory_hostname }}"
-  when: port_out.failed == false
+#- name: Include for each server in group linux
+#  include: health_check.yml
+ # with_items: "{{ inventory_hostname }}"
+ # when: port_out.failed == false
   #ignore_errors: yes
 
 
-- template:
-    src: /var/lib/jenkins/workspace/Wait_for/wait_for/Playbooks/wait/templates/healthcheck.j2
-    dest: /var/lib/jenkins/workspace/Wait_for/wait_for/reports/Server_Health_Check.html
-  delegate_to: localhost
-  ignore_errors: yes
+#- template:
+ #   src: /var/lib/jenkins/workspace/Wait_for/wait_for/Playbooks/wait/templates/healthcheck.j2
+  #  dest: /var/lib/jenkins/workspace/Wait_for/wait_for/reports/Server_Health_Check.html
+ # delegate_to: localhost
+  #ignore_errors: yes
 
 
