@@ -42,7 +42,7 @@
   ignore_errors: yes
   
   
-- stat: path= /var/lib/jenkins/workspace/Wait_for/wait_for/reports/Server_Health_Check.html
+- stat: path=/var/lib/jenkins/workspace/Wait_for/wait_for/reports/Server_Health_Check.html
   register: st
 - template:
     src: /var/lib/jenkins/workspace/Wait_for/wait_for/Playbooks/wait/templates/healthcheck.j2 
