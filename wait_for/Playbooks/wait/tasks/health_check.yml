@@ -34,7 +34,7 @@
 - name: Linux Ping Check
   ping:
     data: success
-  timeout: 10
+#  timeout: 10
   register: ping_out
   ignore_errors: yes
 
@@ -61,7 +61,7 @@
 
 - name: CPU Utilization
   shell: "vmstat | grep -v procs | grep -v swpd | awk '{print $15}'"
-  timeout: 10
+#  timeout: 10
   register: CPU_out
   ignore_errors: yes
 
@@ -108,7 +108,7 @@
 
 - name: Memory Utilization
   shell: "ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head -10"
-  timeout: 10
+#  timeout: 10
   register: Mem_out
   ignore_errors: yes
 
@@ -131,7 +131,7 @@
 
 - name: Swap Utilization
   shell: "free | grep Swap | awk '{print $3/$2 * 100}'"
-  timeout: 10
+#  timeout: 10
   register: swap_out
   ignore_errors: true
 
@@ -149,7 +149,7 @@
 
 - name: File system output
   shell: "df -hT | grep -v Use% | awk '{print $6 $7}'  | sort -nr -k 1 | head -10"
-  timeout: 10
+#  timeout: 10
   register: FS_out
   ignore_errors: yes
 
