@@ -1,6 +1,6 @@
 - hosts: linux
-  become_user: root
-  become: true
+#  become_user: root
+#  become: true
   gather_facts: false
   vars_files:
      - /var/lib/jenkins/workspace/linux
