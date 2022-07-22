@@ -1,25 +1,40 @@
-- name: hostname details
+---
+- name: getting hostname details
   shell: echo $HOSTNAME
-  register: host_output
-- debug:
-    var: host_output.stdout_lines[0]
+  timeout: 10
+  register: var_Sname
+  ignore_errors: yes
+
+- debug: var=var_Sname.stdout_lines[0]
+  ignore_errors: yes
 
 - name: Setting Server IP
   set_fact:
     var_ip: "{{inventory_hostname}}"
   ignore_errors: yes
-  
-  
+
+
 - name: Setting Server Name If Server Name Exist
   set_fact:
-    host_output: "{{host_output.stdout_lines[0]}}"
-  when: host_output is success
+    var_Sname: "{{var_Sname.stdout_lines[0]}}"
+  when: var_Sname is success
   ignore_errors: yes
-  
-  
+
+- name: Setting Server Name if Sevrer Is Not Exist
+  set_fact:
+    var_Sname: "{{inventory_hostname}}"
+  when: var_Sname is failed
+  ignore_errors: yes
+
+- name: Check Print Servername
+  debug:
+    msg: "{{ var_Sname }}"
+  ignore_errors: yes
+
 - name: Linux Ping Check
   ping:
     data: success
+  timeout: 10
   register: ping_out
   ignore_errors: yes
 
@@ -36,7 +51,7 @@
   when: ping_out is success
   ignore_errors: yes
 
-- name: If ping status is DOWN
+- name: If ping status is UP
   set_fact:
     var_ping: DOWN
     var_os: "Linux"
@@ -44,8 +59,113 @@
   ignore_errors: yes
 
 
-  
-  
+- name: CPU Utilization
+  shell: "vmstat | grep -v procs | grep -v swpd | awk '{print $15}'"
+  timeout: 10
+  register: CPU_out
+  ignore_errors: yes
 
- 
-  
+- name: debug CPU Stat
+  debug:
+    msg: "{{ CPU_out.stdout }}"
+  ignore_errors: yes
+
+- name: CPU util status
+  set_fact:
+    var_cpu: Server is {{ CPU_out.stdout }}% idle
+  when: CPU_out is success
+  ignore_errors: yes
+
+- name: CPU util status
+  set_fact:
+    var_cpu: "NA"
+  when: CPU_out is failed
+  ignore_errors: yes
+
+
+- name: Top CPU
+  shell: "export ANSIBLE_STDOUT_CALLBACK=debug && ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu | head -10"
+  timeout: 10
+  register: CPU_TOP
+  ignore_errors: yes
+
+- name: debug TOP CPU Stat
+  debug:
+    msg: "{{ CPU_TOP.stdout_lines }}"
+  ignore_errors: yes
+
+- name: TOP CPU status
+  set_fact:
+    var_top_cpu: "{{ CPU_TOP.stdout_lines }}"
+  when: CPU_TOP.changed == true
+  ignore_errors: yes
+
+- name: TOP CPU status
+  set_fact:
+    var_top_cpu: "NA"
+  when: CPU_TOP.changed == false
+  ignore_errors: yes
+
+- name: Memory Utilization
+  shell: "ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head -10"
+  timeout: 10
+  register: Mem_out
+  ignore_errors: yes
+
+- name: debug Mem Stat
+  debug:
+    msg: "{{ Mem_out.stdout_lines }}"
+  ignore_errors: yes
+
+- name: Mem util status
+  set_fact:
+    var_mem: "{{ Mem_out.stdout_lines }}"
+  when: Mem_out is success
+  ignore_errors: yes
+
+- name: Mem util status
+  set_fact:
+    var_mem: "{{ Mem_out.stdout_lines }}"
+  when: Mem_out is failed
+  ignore_errors: yes
+
+- name: Swap Utilization
+  shell: "free | grep Swap | awk '{print $3/$2 * 100}'"
+  timeout: 10
+  register: swap_out
+  ignore_errors: true
+
+- name: Swap Util
+  set_fact:
+    var_swap: No swap configured
+  when: swap_out is failed
+  ignore_errors: yes
+
+- name: Swap status
+  set_fact:
+    var_swap: Swap is {{ swap_out.stdout }}% utilized
+  when: swap_out is success
+  ignore_errors: yes
+
+- name: File system output
+  shell: "df -hT | grep -v Use% | awk '{print $6 $7}'  | sort -nr -k 1 | head -10"
+  timeout: 10
+  register: FS_out
+  ignore_errors: yes
+
+- name: debug FS
+  debug:
+    msg: "{{ FS_out.stdout_lines }}"
+  ignore_errors: yes
+
+- name: FS status
+  set_fact:
+    var_FS: "{{ FS_out.stdout_lines }}"
+  when: FS_out is success
+  ignore_errors: yes
+
+- name: FS status
+  set_fact:
+    var_FS: "NA"
+  when: FS_out is failed
+  ignore_errors: yes
