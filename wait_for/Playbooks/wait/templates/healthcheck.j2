@@ -14,26 +14,46 @@
 
 <table class=tg align=center table width=1200px>
 <tr>
-        <th class=tg-t6e1 colspan=35>Server Healthcheck</th>
+        <th class=tg-t6e1 colspan=35>Linux Server Healthcheck</th>
 </tr>
 <tr>
 
       <td class=tg-t6g2 align=center>Host Name</td>
       <td class=tg-t6g2 align=center>Connection Status</td>
- 
+      <td class=tg-t6g2 align=center>Swap Utilization</td>
+      <td class=tg-t6g2 align=center>Disk Utilization</td>
+      <td class=tg-t6g2 colspan=15 align=center>CPU MEM Utilization</td>
 </tr>
 
 {% for linux in groups['linux'] %}
+{% if  hostvars[linux]['var_top_cpu'] != "NA" %}
 <tr>
 
 
-    <td class=tg-dq45 rowspan=11 align=center>{{hostvars[linux]['host_output']}}</td>
+    <td class=tg-dq45 rowspan=11 align=center>{{hostvars[linux]['var_Sname']}}</td>
     <td class=tg-dq45 rowspan=11 align=center>{{hostvars[linux]['var_ping']}}</td>
-    
-
+    <td class=tg-dq45 rowspan=11 align=center>{{hostvars[linux]['var_swap']}}</td>
+    <td class=tg-dq45 rowspan=11 align=center>{{hostvars[linux]['var_FS'] | replace('[','') | replace(']','') | replace(",", "<br/>") }}</td>
+{% for info in hostvars[linux]['var_top_cpu'] %}
+{% set cpu_percent = info.split(' ')|reject('match', '^$')|list %}
+{% set proc_cmd = cpu_percent[2:-2] | join(' ') %}
+<tr>
+        <td class=tg-dq45 >{{ cpu_percent[0] }}</td>
+        <td class=tg-dq45>{{ cpu_percent[1] }}</td>
+        <td class=tg-dq45 >{{ proc_cmd }}</td>
+        <td class=tg-dq45>{{ cpu_percent[-2] }}</td>
+        <td class=tg-dq45>{{ cpu_percent[-1] }}</td>
 </tr>
+</tr>
+{% endfor %}
+{% else %}
+<table class=tg align=center table width=1200px>
+<tr>
+    <td class=tg-dq45 rowspan=11 align=center>{{hostvars[linux]['var_Sname']}}</td>
+</tr>
+</table>
+{% endif %}
 {% endfor %}
 </table>
 </body>
 </html>
-
