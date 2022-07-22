@@ -45,8 +45,10 @@
 
 
 - template:
-    src: /var/lib/jenkins/workspace/Wait_for/wait_for/Playbooks/wait/templates/healthcheck.j2
-    dest: /var/lib/jenkins/workspace/Wait_for/wait_for/reports/Server_Health.html
+  #  src: /var/lib/jenkins/workspace/Wait_for/wait_for/Playbooks/wait/templates/healthcheck.j2
+    src: healthcheck.j2
+  #  dest: /var/lib/jenkins/workspace/Wait_for/wait_for/reports/Server_Health.html
+    dest: /server_health.html
     mode: '0644'
 #  delegate_to: localhost
   ignore_errors: yes
