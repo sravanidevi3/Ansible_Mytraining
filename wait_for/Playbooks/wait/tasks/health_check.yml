@@ -85,7 +85,7 @@
 
 - name: Top CPU
   shell: "export ANSIBLE_STDOUT_CALLBACK=debug && ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu | head -10"
-  timeout: 10
+#  timeout: 10
   register: CPU_TOP
   ignore_errors: yes
 
