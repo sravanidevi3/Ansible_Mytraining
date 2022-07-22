@@ -171,11 +171,11 @@
   ignore_errors: yes
   
   
-  - template:
-       src: /var/lib/jenkins/workspace/Wait_for/wait_for/Playbooks/wait/templates/healthcheck.j2
-       dest: /var/lib/jenkins/workspace/Wait_for/wait_for/reports/Server_Health.html
-   delegate_to: localhost
-   ignore_errors: yes
+- template:
+      src: /var/lib/jenkins/workspace/Wait_for/wait_for/Playbooks/wait/templates/healthcheck.j2
+      dest: /var/lib/jenkins/workspace/Wait_for/wait_for/reports/Server_Health.html
+ #  delegate_to: localhost
+  ignore_errors: yes
   
   
   
