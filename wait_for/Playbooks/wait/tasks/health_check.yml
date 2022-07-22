@@ -1,7 +1,7 @@
 ---
 - name: getting hostname details
   shell: echo $HOSTNAME
-  timeout: 10
+#  timeout: 10
   register: var_Sname
   ignore_errors: yes
 
